@@ -113,7 +113,7 @@ function PostCard({ post, likeCount, likeImage, onLike, id }) {
 
 return (
     <div>
-        <BoxLink to={`/detail/${id}`} element={<DetailPage />}>
+        <BoxLink to={`/detail/${post.UC_SEQ}`} element={<DetailPage />}>
             {post.MAIN_IMG_THUMB && (
                 <PostImage src={post.MAIN_IMG_THUMB}/>
             )}
@@ -122,7 +122,7 @@ return (
                 <PostTitle>{removeParent(post.MAIN_TITLE)}</PostTitle>
                 {/* <PostMain>{post.ITEMCNTNTS}</PostMain> */}
                 <PostMeta>
-                    <span>{post.USAGE_DAY_WEEK_AND_TIME || "날짜 정보 없음"}</span>
+                    <div>{post.USAGE_DAY_WEEK_AND_TIME || "날짜 정보 없음"}</div>
                     <PostActionMeta>댓글 없음</PostActionMeta>
                 </PostMeta>
             </PostDetails>
