@@ -74,9 +74,8 @@ export const PostCard = styled.div`
 `;
 
 // 포스트 이미지
-export const PostImage = styled.div`
-  background-color: #F96969;
-  ;
+export const PostImage = styled.img`
+ 
   height: 180px;
   width: 100%;
 `;

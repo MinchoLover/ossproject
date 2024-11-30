@@ -16,7 +16,7 @@ function MyRouter() {
           {/* 피드 페이지 */}
           <Route path="/feed" element={<FeedPage/>}/>
           {/* 상세 페이지 */}
-          <Route path="/detail" element={<DetailPage/>}/>
+          <Route path="/detail/:id" element={<DetailPage/>}/>
           {/* 404 페이지 */}
           <Route path="/*" element={<NotFound />} />
           {/* 편집 페이지 */}

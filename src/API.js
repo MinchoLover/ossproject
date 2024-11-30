@@ -15,7 +15,7 @@ const Api = () => {
             params: {
               serviceKey: process.env.REACT_APP_API_KEY,
               numOfRows: 10,
-              pageNo: 1,
+
               resultType: "json",
             },
           }

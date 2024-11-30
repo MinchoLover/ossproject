@@ -1,7 +1,8 @@
+import axios from "axios";
 import { BoxLink, ButtonIcon, LikeIcon, Sort } from "../FeedPage/Mycomponent";
 import { useRecoilState } from "recoil";
 import { myInfoIntroduce, myInfoname } from '../../Atom';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     AuthorImage,
     AuthorInfo,
@@ -25,17 +26,63 @@ import {
     Radius,
     StyledImage
 } from "./Mycomponent";
+import { useParams } from "react-router-dom";
 
 function DetailPage() {
     // 포스트 정보를 담고 있는 배열
     const [myName] = useRecoilState(myInfoname);
     const [myIntroduce] = useRecoilState(myInfoIntroduce);
-    const posts = [
+    const likes = [
         {
             likes: 0
         }
     ];
 
+    const { id } = useParams();
+    const [posts, setPosts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    // const removeParent = (text) => {
+    //     return text.replace(/\(.*?\)/g, '').trim();
+    // };
+    console.log(posts.MAIN_IMG_THUMBNAIL);
+
+    useEffect(() => {
+        const fetchFestivals = async () => {
+        try {
+            const response = await axios.get(
+                "https://apis.data.go.kr/6260000/FestivalService/getFestivalKr",
+                {
+                    params: {
+                        serviceKey: process.env.REACT_APP_API_KEY,
+                        numOfRows: 1,
+                        UC_SEQ: id,
+                        pageNo: 1,
+                        resultType: "json",
+                    },
+                }
+            );
+            
+            console.log("응답 데이터:", response.data)
+            const items = response.data.getFestivalKr?.item;
+
+            if(!items) {
+                throw new Error("데이터를 찾을 수 없습니다.");
+            }
+            setPosts(items);
+            setLoading(false);
+        } catch (error) {
+            setError("API 요청 중 오류가 발생했습니다.");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+    fetchFestivals();
+}, [id])
+
+    
     // 포스트의 상세 정보
     const Info = {
         title: "PARD 4기 화이팅",
@@ -45,10 +92,12 @@ function DetailPage() {
         date: "24.08.14"
     };
 
+
+
     // 좋아요 수와 좋아요 이미지 상태를 관리
-    const [likeCounts, setLikeCounts] = useState(posts.map(post => post.likes));
+    const [likeCounts, setLikeCounts] = useState(likes.map(post => post.likes));
     const [likeImages, setLikeImages] = useState(
-        posts.map(() => "/Image/like.png")
+        likes.map(() => "/Image/like.png")
     );
 
     const handleLike = (index) => {
@@ -65,7 +114,12 @@ function DetailPage() {
         setLikeCounts(newLikeCounts);
         setLikeImages(newLikeImages);
     };
-
+if(error) {
+    console.log({error});
+}
+if(loading) {
+    console.log(loading);
+}
     return (
         <BaseContainer>
             <Header>
@@ -117,7 +171,7 @@ function DetailPage() {
                 <LeftSideBar>
                     <LeftSideBarContent>
                         {
-                            posts.map((_, index) => (
+                            likes.map((_, index) => (
                                 <Like
                                     key={index}
                                     likeCount={likeCounts[index]} // 현재 좋아요 수 전달
@@ -130,7 +184,9 @@ function DetailPage() {
                 </LeftSideBar>
 
                 <FeedContainer>
-                    <FeedTitle>{Info.title}</FeedTitle>
+                    {/* <FeedTitle>{removeParent(posts.MAIN_TITLE)}</FeedTitle> */}
+                    <FeedTitle>{posts.MAIN_TITLE}</FeedTitle>
+                    
 
                     <FeedInfo>
                         <div
@@ -148,7 +204,7 @@ function DetailPage() {
                         </ButtonList>
                     </FeedInfo>
                     <FeedContent>
-                        {Info.content} {/* 포스트 내용 출력 */}
+                        {posts.ITEMCNTNTS || "내용 없음"} {/* 포스트 내용 출력 */}
                     </FeedContent>
                     <FeedAuthorInfo>
                         <AuthorImage/>
