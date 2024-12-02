@@ -28,42 +28,44 @@ import {
 } from "./Mycomponent";
 import { useParams } from "react-router-dom";
 
+
+
 function DetailPage() {
     // 포스트 정보를 담고 있는 배열
     const [myName] = useRecoilState(myInfoname);
     const [myIntroduce] = useRecoilState(myInfoIntroduce);
-    // const likes = [
-    //     {
-    //         likes: 2
-    //     }
-    // ];
+    const likes = [
+        {
+            likes: 2
+        }
+    ];
 
     const { id } = useParams();
     const [posts, setPosts] = useState([]);
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
     // 좋아요 수와 좋아요 이미지 상태를 관리
-    // const [likeCounts, setLikeCounts] = useState(likes.map(post => post.likes));
-    // const [likeImages, setLikeImages] = useState(
-    //     likes.map(() => "/Image/like.png")
-    // );
+    const [likeCounts, setLikeCounts] = useState(likes.map(post => post.likes));
+    const [likeImages, setLikeImages] = useState(
+        likes.map(() => "/Image/like.png")
+    );
 
     // 좋아요 상태 관리 함수
-    // const handleLike = (index) => {
-    //     const newLikeCounts = [...likeCounts];
-    //     const newLikeImages = [...likeImages];
+    const handleLike = (index) => {
+        const newLikeCounts = [...likeCounts];
+        const newLikeImages = [...likeImages];
     
-    //     if (newLikeImages[index] === "/Image/likeactive.png") {
-    //         newLikeCounts[index] -= 1;
-    //         newLikeImages[index] = "/Image/like.png";
-    //     } else {
-    //         newLikeCounts[index] += 1;
-    //         newLikeImages[index] = "/Image/likeactive.png";
-    //     }
-    //     setLikeCounts(newLikeCounts);
-    //     setLikeImages(newLikeImages);
-    // };
+        if (newLikeImages[index] === "/Image/likeactive.png") {
+            newLikeCounts[index] -= 1;
+            newLikeImages[index] = "/Image/like.png";
+        } else {
+            newLikeCounts[index] += 1;
+            newLikeImages[index] = "/Image/likeactive.png";
+        }
+        setLikeCounts(newLikeCounts);
+        setLikeImages(newLikeImages);
+    };
 
     
     const removeParent = (text) => {
@@ -91,29 +93,21 @@ function DetailPage() {
             if(!items) {
                 throw new Error("데이터를 찾을 수 없습니다.");
             }
-            // setPosts(items);
             setPosts(items[0]); 
-            // setLoading(false);
+            setLoading(false);
         } catch (error) {
-            // setError("API 요청 중 오류가 발생했습니다.");
+            setError("API 요청 중 오류가 발생했습니다.");
             console.error(error);
         } finally {
-            // setLoading(false);
+            setLoading(false);
         }
     };
     fetchFestivals();
 }, [id]);
-// return (
-//     <div>
-//         {posts && (
-//             <div>
-//                 <h1>{posts.MAIN_TITLE}</h1>
-//                 <p>{posts.ITEMCNTNTS}</p>
-//                 <img src={posts.MAIN_IMG_THUMB} alt={posts.MAIN_TITLE} />
-//             </div>
-//         )}
-//     </div>
-// );
+
+    if (loading) return <p>로딩 중...</p>;
+    if (error) return <p>{error}</p>;
+
     return (
         <BaseContainer>
             <Header>
@@ -164,7 +158,7 @@ function DetailPage() {
             <MainContainer>
                 <LeftSideBar>
                     <LeftSideBarContent>
-                        {/* {
+                        {
                             likes.map((_, index) => (
                                 <Like
                                     key={index}
@@ -173,12 +167,11 @@ function DetailPage() {
                                     onLike={() => handleLike(index)} // 클릭 시 좋아요 처리 함수 전달
                                 />
                             ))
-                        } */}
+                        }
                     </LeftSideBarContent>
                 </LeftSideBar>
 
                 <FeedContainer>
-                    {/* <FeedTitle>{removeParent(posts.MAIN_TITLE)}</FeedTitle> */}
                     <FeedTitle>{posts.MAIN_TITLE ? removeParent(posts.MAIN_TITLE) : "로딩 중..."}</FeedTitle>
                     
 
@@ -197,11 +190,14 @@ function DetailPage() {
                             <div>삭제</div>
                         </ButtonList>
                     </FeedInfo>
+                    <div>
+
+                    <img src={posts.MAIN_IMG_THUMB} alt={posts.MAIN_TITLE}/>
+                    </div>
                 
                     <FeedContent>
+                    <h2>축제 세부 정보</h2>
                     {posts.ITEMCNTNTS}
-                  
-
                     </FeedContent>
                         
                     <FeedAuthorInfo>
@@ -213,15 +209,13 @@ function DetailPage() {
                     </FeedAuthorInfo>
                     <Line></Line>
                     <LinkList>
-                        <StyledImage
-                            src="/DetailImage/깃허브 아이콘.png"
-                            style={{ height: '35px', width: '35px' }}/>
+                        
                         <StyledImage
                             src="/DetailImage/홈  아이콘.png"
                             style={{ height: '35px', width: '35px' }}/>
                         <StyledImage
                             src="/DetailImage/메일 아이콘.png"
-                            style={{ height: '35px', width: '35px' }}/>
+                            style={{ height: '35px', width: '35px', marginBottom: '50px'}}/>
                     </LinkList>
                 </FeedContainer>
             </MainContainer>
@@ -229,38 +223,41 @@ function DetailPage() {
     );
 }
 
+function Like({ likeCount, likeImage, onLike }) {
+
+    return (
+        <div 
+            style={{
+                 display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                height: '160px'
+            }}>
+            <Radius>
+
+                <LikeIcon onClick={onLike}>
+                    <StyledImage src={likeImage} alt="like icon" width="20px" height="20px"/>
+                </LikeIcon>
+            </Radius>
+            <div>{likeCount}</div> {/* 좋아요 수 출력 */}
+            <Radius> 
+                <StyledImage 
+                    src="/DetailImage/피드 공유 아이콘.png"
+                    alt="share icon"
+                    style={{ 
+                        width: '20px',
+                        height: '20px'
+                    }}/>
+            </Radius>
+        </div>
+    );
+}
+
+
+
 export default DetailPage;
 
 
-// 좋아요 기능을 담당하는 컴포넌트
-// function Like({ likeCount, likeImage, onLike }) {
-//     return 
-//         <div 
-//             style={{
- //                 display: 'flex',
-//                 flexDirection: 'column',
-//                 alignItems: 'center',
-//                 height: '160px'
-//             }}>
-//             <Radius>
-
-//                 <LikeIcon onClick={onLike}>
-//                     <StyledImage src={likeImage} alt="like icon" width="20px" height="20px"/>
-//                 </LikeIcon>
-//             </Radius>
-//             <div>{likeCount}</div> {/* 좋아요 수 출력 */}
-//             <Radius> 
-//                 <StyledImage 
-//                     src="/DetailImage/피드 공유 아이콘.png"
-//                     alt="share icon"
-//                     style={{ 
-//                         width: '20px',
-//                         height: '20px'
-//                     }}/>
-//             </Radius>
-//         </div>
-//     );
-// }
 
 
 
