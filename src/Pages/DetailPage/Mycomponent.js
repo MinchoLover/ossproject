@@ -104,7 +104,7 @@ export const ButtonList = styled.div `
 export const FeedContent = styled.div `
   font-size: 17px; // 폰트 크기
   margin-bottom: 250px; // 하단 여백
-  
+  line-height: 30px;
   
   overflow-y: scroll; 
   margin-top: 50px;

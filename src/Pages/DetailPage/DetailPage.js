@@ -39,11 +39,14 @@ function DetailPage() {
             likes: 2
         }
     ];
-
+    // 아이디 값 detail로 넘겨줄 것들, 에러 로딩
     const { id } = useParams();
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // 내가 좋아하는 페이지 
+    
 
     // 좋아요 수와 좋아요 이미지 상태를 관리
     const [likeCounts, setLikeCounts] = useState(likes.map(post => post.likes));

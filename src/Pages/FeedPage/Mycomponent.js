@@ -3,10 +3,22 @@ import { Link } from "react-router-dom";
 
 // 전체 페이지 컨테이너
 export const PageContainer = styled.div`
-  background-color: #f9fafb; /* 그리드 간의 간격과 일치하는 배경색 */
+  background-color: #f9fafb; //그리드 간의 간격과 일치하는 배경색
+  
   padding: 30px;
   min-height: 100vh;
 `;
+
+
+export const Grid = styled.div`
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+ &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); 
+  }
+
+`
 
 // Feed 컨테이너
 export const FeedContainer = styled.div`
@@ -56,6 +68,8 @@ export const PostGrid = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   margin-top: 20px;
+  
+ 
 
 `;
 
@@ -66,6 +80,7 @@ export const PostCard = styled.div`
   border-radius: 8px;
   margin-bottom: 20px; /* 포스트 카드 간의 간격을 추가 */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 350px;
 
   &:hover {
     transform: translateY(-5px);
