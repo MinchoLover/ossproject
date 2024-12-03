@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { BoxLink, ButtonIcon, FeedContainer, FeedHeader, FeedHeaderBottom, FeedHeaderTop, LikeIcon, PageContainer, PostActionContainer, PostActionMeta, PostAuthor, PostCard, PostDetails, PostGrid, PostImage, PostMeta, PostTitle, Sort, StyledImage, StyledRadius, StyledTrendingContainer } from "../FeedPage/Mycomponent";
+import { BoxLink, ButtonIcon, FeedContainer, FeedHeader, FeedHeaderTop, LikeIcon, PageContainer, PostActionContainer, PostActionMeta, PostAuthor, PostCard, PostDetails, PostGrid, PostImage, PostMeta, PostTitle, Sort, StyledImage, StyledRadius, StyledTrendingContainer } from "../FeedPage/Mycomponent";
 
 
 function MyPage() {
@@ -60,18 +60,7 @@ function MyPage() {
               </Sort>
 
             </FeedHeaderTop>
-            <FeedHeaderBottom>
-
-              <Sort fontWeight="bold">
-                  <StyledTrendingContainer>
-                      <StyledImage src="/Image/trending.png" alt="trending" width="30px" height="30px" />
-                      <div className="trending-text">트렌딩</div>
-                  </StyledTrendingContainer>
-                  <StyledImage src="/Image/clock.png" alt="clock" width="30px" height="30px" />
-                  <span>최신</span>
-              </Sort>
-                        
-            </FeedHeaderBottom>
+            
             <PostGrid>
                 {favorites.map((favorite) => (
                     <PostCard key={favorite.id}>

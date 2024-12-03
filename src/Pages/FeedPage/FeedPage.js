@@ -1,5 +1,7 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+
+
 import {
     BoxLink,
     ButtonIcon,
@@ -36,6 +38,51 @@ function FeedPage() {
     });
     const [filteredPosts, setFilteredPosts] = useState([]); // 필터링된 데이터
     // const [favorites, setFavorites] = useState([]); // 좋아요 선택한 데이터 
+    const [sortOrder, setSortOrder] = useState("asc");
+
+
+    const extractDate = (dateString) => {
+        if (!dateString || typeof dateString !== "string") {
+            return new Date("1970-01-01"); // 유효하지 않은 값 처리
+        }
+    
+        // 1. 특정 패턴에 맞는 연도, 월, 일 추출
+        const dateMatch = dateString.match(/(\d{4})[년\s\-.]*(\d{1,2})?[월\s\-.]*(\d{1,2})?[일\s\-.]*/);
+        if (dateMatch) {
+            const [, year, month = "01", day = "01"] = dateMatch; // 연도는 필수, 월/일이 없으면 기본값 1월 1일
+            return new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
+        }
+    
+        // 2. "~"가 포함된 경우(범위 지정: 2024년 12월~2025년 1월)
+        const rangeMatch = dateString.match(/(\d{4})[년\s\-.]*(\d{1,2})?[월\s\-.]*~\s*(\d{4})?[년\s\-.]*(\d{1,2})?[월\s\-.]*/);
+        if (rangeMatch) {
+            const [, startYear, endYear = null, endMonth = "01"] = rangeMatch;
+            const year = endYear || startYear; // 종료 연도가 없으면 시작 연도 사용
+            const month = endMonth.padStart(2, "0");
+            return new Date(`${year}-${month}-01`); // 범위의 종료 날짜를 기준으로 설정
+        }
+    
+        // 3. "예정" 또는 "취소"와 같은 텍스트 처리
+        if (dateString.includes("예정") || dateString.includes("취소")) {
+            return new Date("2100-01-01"); // 임의의 미래 날짜를 할당하여 "예정" 항목을 뒤로 정렬
+        }
+    
+        // 4. "날짜 정보 없음" 처리
+        if (dateString.includes("날짜 정보 없음")) {
+            return new Date("1970-01-01"); // 가장 오래된 기본 날짜
+        }
+    
+        // 기본값(정확히 파싱할 수 없는 경우)
+        return new Date("1970-01-01");
+    };
+    
+    const sortByDate = useCallback((posts, order = "asc") => {
+        return posts.sort((a, b) => {
+            const dateA = extractDate(a.USAGE_DAY_WEEK_AND_TIME || "");
+            const dateB = extractDate(b.USAGE_DAY_WEEK_AND_TIME || "");
+            return order === "asc" ? dateA - dateB : dateB - dateA;
+        });
+    }, []);
 
     useEffect(() => {
         const fetchFestivals = async () => {
@@ -60,6 +107,7 @@ function FeedPage() {
                     likeCount: 0,
                     liked: false
                 }));
+                console.log(response.data);
                 setPosts(postsWithLikes);
             } catch (error) {
                 setError("API 요청 중 오류가 발생했습니다.");
@@ -70,6 +118,8 @@ function FeedPage() {
         };
         fetchFestivals();
     }, []);
+
+
 
     // 필터링된 데이터
     useEffect(() => {
@@ -85,8 +135,11 @@ function FeedPage() {
                 : true;
             return matchGugun && matchDate && matchKeyword;
         });
-        setFilteredPosts(filtered);
-    }, [filter, posts]);
+    
+        const sorted = sortByDate(filtered, sortOrder);
+        setFilteredPosts(sorted);
+    }, [filter, posts, sortOrder, sortByDate]);
+
 
     // MockAPI로 좋아요 저장
     const handleLike = async (post) => {
@@ -133,7 +186,12 @@ function FeedPage() {
                                 <div className="trending-text">트렌딩</div>
                             </StyledTrendingContainer>
                             <StyledImage src="/Image/clock.png" alt="clock" width="30px" height="30px" />
-                            <span>최신</span>
+                            <Sort>
+                                <ButtonIcon onClick={() => setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))}>
+                                    {sortOrder === "asc" ? "최신순" : "과거순"}
+                                </ButtonIcon>
+                            </Sort>
+                            
                         </Sort>
                         <div style={{ marginBottom: "20px" }}>
                     <label>
@@ -245,6 +303,7 @@ export default FeedPage;
 //     StyledTrendingContainer
 // } from './Mycomponent';
 // import DetailPage from '../DetailPage/DetailPage';
+
 
 // function FeedPage() {
 //     const [posts, setPosts] = useState([]);
