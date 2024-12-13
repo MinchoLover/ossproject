@@ -14,7 +14,6 @@ import {
     LikeIcon,
     PageContainer,
     PostActionContainer,
-    PostActionMeta,
     PostAuthor,
     PostDetails,
     PostGrid,
@@ -88,6 +87,20 @@ function FeedPage() {
         });
     }, []);
 
+        const handleLike = (id) => {
+        setPosts((prevPosts) =>
+            prevPosts.map((post) =>
+                post.UC_SEQ === id
+                    ? {
+                          ...post,
+                          likeCount: post.liked ? post.likeCount - 1 : post.likeCount + 1,
+                          liked: !post.liked
+                      }
+                    : post
+            )
+        );
+    };
+
     useEffect(() => {
         const fetchFestivals = async () => {
             try {
@@ -145,25 +158,6 @@ function FeedPage() {
     }, [filter, posts, sortOrder, sortByDate]);
 
 
-    // MockAPI로 좋아요 저장
-    const handleLike = async (post) => {
-        try {
-            if (!post.liked) {
-                await axios.post("https://674d47b354e1fca9290eeeb5.mockapi.io/festivals", post);
-                alert("좋아하는 목록에 추가되었습니다!");
-            } else {
-                alert("이미 좋아요한 축제입니다.");
-            }
-
-            // 상태 업데이트
-            setPosts((prevPosts) =>
-                prevPosts.map((p) => (p.UC_SEQ === post.UC_SEQ ? { ...p, liked: true } : p))
-            );
-        } catch (err) {
-            console.error("MockAPI 저장 오류:", err);
-        }
-    };
-
     if (loading) return <p>로딩 중 ...</p>;
     if (error) return <p>{error}</p>;
 
@@ -180,7 +174,10 @@ function FeedPage() {
                             <StyledImage src="/Image/bell.png" alt="bell" width="20px" height="20px" />
                             <StyledImage src="/Image/search.png" alt="search" width="20px" height="20px" />
                             <ButtonIcon>
-                                <BoxLink to="/mypage">마이 페이지</BoxLink>
+                                <BoxLink to="/edit">개인 정보 수정</BoxLink>
+                                </ButtonIcon>
+                            <ButtonIcon>
+                                <BoxLink to="/mypage">즐겨찾기</BoxLink>
                             </ButtonIcon>
                         </Sort>
                     </FeedHeaderTop>
@@ -211,7 +208,7 @@ function FeedPage() {
                             <option value="중구">중구</option>
                             <option value="사하구">사하구</option>
                             <option value="부산진구">부산진구</option>
-                            {/* API 데이터를 기반으로 동적으로 생성 가능 */}
+                            
                         </StyledSelect>
                     
                     <div>
@@ -262,10 +259,11 @@ function PostCard({ post, likeCount, likeImage, onClick, id }) {
                     <PostTitle>{removeParent(post.MAIN_TITLE)}</PostTitle>
                     <PostMeta>
                         <div>{post.USAGE_DAY_WEEK_AND_TIME || "날짜 정보 없음"}</div>
-                        <PostActionMeta>댓글 없음</PostActionMeta>
                     </PostMeta>
+                    <div>
+                        
                     <PostMeta>이용 가격: {post.USAGE_AMOUNT || "이용 가격 정보 없음"} </PostMeta>
-                    
+                    </div>
                 </PostDetails>
             </BoxLink>
 

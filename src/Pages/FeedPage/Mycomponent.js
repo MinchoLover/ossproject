@@ -168,7 +168,8 @@ export const PostMain = styled.p`
 export const PostMeta = styled.div`
   display: flex;
   margin-bottom: 12px;
-  font-size: 14px;
+  margin-top: 18px;
+  font-size: 16px;
   color: #868e96;
 
   span {
@@ -196,10 +197,10 @@ export const PostActionContainer = styled.div`
 
 `;
 
-export const PostActionMeta = styled.span`
-  font-size: 14px;
+export const PostActionMeta = styled.div`
+  font-size: 16px;
   color: #868e96;
-  margin-left: 12px;
+  margin-bottom: 14px;
 `;
 
 // 좋아요 아이콘
