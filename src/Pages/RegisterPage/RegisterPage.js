@@ -22,6 +22,7 @@ import {
 } from './Mycomponent.js';
 import { myInfoEmail, myInfoIntroduce, myInfoPassword, myInfoname } from "../../Atom.js";
 
+
 function RegisterPage() {
     const [myName, setMyName] = useRecoilState(myInfoname);
     const [myEmail, setMyEmail] = useRecoilState(myInfoEmail);
@@ -45,6 +46,7 @@ function RegisterPage() {
             navigate('/feed'); // Feed 페이지로 리디렉션
         }
     };
+
 
     return (
         <Page>

@@ -9,7 +9,6 @@ export const PageContainer = styled.div`
   min-height: 100vh;
 `;
 
-
 export const Grid = styled.div`
 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
 transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -59,6 +58,55 @@ export const FeedHeaderBottom = styled.div`
     font-weight: 400;
   }
   
+`;
+
+// Styled Container for the filter section
+export const FilterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+// Styled Select
+export const StyledSelect = styled.select`
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
+  color: #333;
+  &:focus {
+    outline: none;
+    border-color: #007aff;
+  }
+`;
+
+// Styled Input
+export const StyledInput = styled.input`
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-left: 16px;
+  background-color: white;
+  color: #333;
+  &:focus {
+    outline: none;
+    border-color: #007aff;
+  }
+`;
+
+// Styled Label
+export const StyledLabel = styled.label`
+  font-size: 20px;
+  font-weight: bold;
+  color: #555;
+  margin-right: 8px;
 `;
 
 

@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect, useCallback } from 'react';
 
 
+
 import {
     BoxLink,
     ButtonIcon,
@@ -22,7 +23,10 @@ import {
     PostTitle,
     Sort,
     StyledImage,
+    StyledInput,
+    StyledLabel,
     StyledRadius,
+    StyledSelect,
     StyledTrendingContainer
 } from './Mycomponent';
 import DetailPage from '../DetailPage/DetailPage';
@@ -171,6 +175,7 @@ function FeedPage() {
                 <FeedHeader>
                     <FeedHeaderTop>
                         <StyledImage src="/DetailImage/bugilogo.png" alt="velog logo" width="500px" height="100px" />
+                       
                         <Sort>
                             <StyledImage src="/Image/bell.png" alt="bell" width="20px" height="20px" />
                             <StyledImage src="/Image/search.png" alt="search" width="20px" height="20px" />
@@ -185,7 +190,7 @@ function FeedPage() {
                                 <StyledImage src="/Image/trending.png" alt="trending" width="30px" height="30px" />
                                 <div className="trending-text">트렌딩</div>
                             </StyledTrendingContainer>
-                            <StyledImage src="/Image/clock.png" alt="clock" width="30px" height="30px" />
+                            
                             <Sort>
                                 <ButtonIcon onClick={() => setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))}>
                                     {sortOrder === "asc" ? "최신순" : "과거순"}
@@ -194,9 +199,10 @@ function FeedPage() {
                             
                         </Sort>
                         <div style={{ marginBottom: "20px" }}>
-                    <label>
-                        지역:
-                        <select
+                            
+                                <StyledLabel>지역:</StyledLabel>
+                        
+                        <StyledSelect
                             value={filter.gugun}
                             onChange={(e) => setFilter({ ...filter, gugun: e.target.value })}
                         >
@@ -206,17 +212,18 @@ function FeedPage() {
                             <option value="사하구">사하구</option>
                             <option value="부산진구">부산진구</option>
                             {/* API 데이터를 기반으로 동적으로 생성 가능 */}
-                        </select>
-                    </label>
-                    <label>
-                        축제 이름:
-                        <input
+                        </StyledSelect>
+                    
+                    <div>
+
+                        <StyledLabel>축제 이름:</StyledLabel>
+                        <StyledInput
                             type="text"
                             placeholder="축제 이름을 입력하세요"
                             value={filter.keyword}
                             onChange={(e) => setFilter({ ...filter, keyword: e.target.value })}
                         />
-                    </label>
+                    </div>
                 </div>
                     </FeedHeaderBottom>
                 </FeedHeader>
@@ -257,6 +264,8 @@ function PostCard({ post, likeCount, likeImage, onClick, id }) {
                         <div>{post.USAGE_DAY_WEEK_AND_TIME || "날짜 정보 없음"}</div>
                         <PostActionMeta>댓글 없음</PostActionMeta>
                     </PostMeta>
+                    <PostMeta>이용 가격: {post.USAGE_AMOUNT || "이용 가격 정보 없음"} </PostMeta>
+                    
                 </PostDetails>
             </BoxLink>
 

@@ -202,6 +202,11 @@ function DetailPage() {
                     <h2>축제 세부 정보</h2>
                     {posts.ITEMCNTNTS}
                     </FeedContent>
+
+                    <FeedContent>
+                        <h2>오시는 길</h2>
+                        오시는 길: {posts.TRFC_INFO}
+                    </FeedContent>
                         
                     <FeedAuthorInfo>
                         <AuthorImage/>
