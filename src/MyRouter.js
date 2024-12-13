@@ -4,6 +4,10 @@ import { Route, Routes } from 'react-router-dom';
 import DetailPage from './Pages/DetailPage/DetailPage';
 import NotFound from './Pages/ErrorPage/NotFound';
 import EditPage from './Pages/EditPage/EditPage';
+import Mypage from './Pages/Mypage/Mypage';
+
+
+
 
 
 function MyRouter() {
@@ -21,6 +25,8 @@ function MyRouter() {
           <Route path="/*" element={<NotFound />} />
           {/* 편집 페이지 */}
           <Route path="/edit" element={<EditPage/>}/>
+          {/* 마이 페이지 */}
+          <Route path="/mypage" element={<Mypage/>}/>
       </Routes>
   );
  

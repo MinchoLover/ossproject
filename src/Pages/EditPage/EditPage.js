@@ -4,7 +4,7 @@ import { myInfoEmail, myInfoIntroduce, myInfoPassword, myInfoname } from '../../
 import { useNavigate } from "react-router-dom";
 
 import { BaseContainer, Body, Bottom, Box, BoxLink, Button, EditInput, Email, H1, Header, Introduce, Label, Name, Page, Password } from "../RegisterPage/Mycomponent";
-import { ButtonIcon, FeedHeaderTop, Sort, StyledImage, StyledRadius } from '../FeedPage/Mycomponent';
+import { ButtonIcon, FeedHeaderTop, Sort, StyledImage} from '../FeedPage/Mycomponent';
 
 
 
@@ -31,14 +31,17 @@ function EditPage () {
         <FeedHeaderTop style={({
             width: '1100px',
             height: '60px',
+            marginBottom: "150px",
         })}>
         <StyledImage src="/Image/velog logo.png" alt="velog logo"/>
                 <Sort>
                     <StyledImage src="/Image/bell.png" alt="bell" width="20px" height="20px"/>
                     <StyledImage src="/Image/search.png" alt="search" width="20px" height="20px"/>
-                    <ButtonIcon>새 글 작성</ButtonIcon>
-                    <BoxLink to="/edit"><StyledRadius/>
+                    <ButtonIcon>
+                        <BoxLink to="/feed">피드 페이지
                     </BoxLink>
+                    </ButtonIcon>
+                    
 
                 </Sort>
             </FeedHeaderTop>
@@ -113,7 +116,8 @@ function EditPage () {
                 {/* 수정 밑 취소 버튼 요소 */}
 
                 <Bottom>
-                    <Button bgColor="orange">취소</Button>
+                    <Button bgColor="orange"><BoxLink to="/feed">취소
+                    </BoxLink></Button>
                     <Button onClick={submitHandler}>
                         수정
                     </Button>

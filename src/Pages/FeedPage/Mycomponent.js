@@ -3,10 +3,21 @@ import { Link } from "react-router-dom";
 
 // 전체 페이지 컨테이너
 export const PageContainer = styled.div`
-  background-color: #f9fafb; /* 그리드 간의 간격과 일치하는 배경색 */
+  background-color: #f9fafb; //그리드 간의 간격과 일치하는 배경색
+  
   padding: 30px;
   min-height: 100vh;
 `;
+
+export const Grid = styled.div`
+box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+ &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15); 
+  }
+
+`
 
 // Feed 컨테이너
 export const FeedContainer = styled.div`
@@ -49,6 +60,55 @@ export const FeedHeaderBottom = styled.div`
   
 `;
 
+// Styled Container for the filter section
+export const FilterContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+// Styled Select
+export const StyledSelect = styled.select`
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
+  color: #333;
+  &:focus {
+    outline: none;
+    border-color: #007aff;
+  }
+`;
+
+// Styled Input
+export const StyledInput = styled.input`
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  margin-left: 16px;
+  background-color: white;
+  color: #333;
+  &:focus {
+    outline: none;
+    border-color: #007aff;
+  }
+`;
+
+// Styled Label
+export const StyledLabel = styled.label`
+  font-size: 20px;
+  font-weight: bold;
+  color: #555;
+  margin-right: 8px;
+`;
+
 
 // 포스트 그리드
 export const PostGrid = styled.div`
@@ -56,6 +116,8 @@ export const PostGrid = styled.div`
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
   margin-top: 20px;
+  
+ 
 
 `;
 
@@ -66,6 +128,7 @@ export const PostCard = styled.div`
   border-radius: 8px;
   margin-bottom: 20px; /* 포스트 카드 간의 간격을 추가 */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 350px;
 
   &:hover {
     transform: translateY(-5px);
@@ -105,7 +168,8 @@ export const PostMain = styled.p`
 export const PostMeta = styled.div`
   display: flex;
   margin-bottom: 12px;
-  font-size: 14px;
+  margin-top: 18px;
+  font-size: 16px;
   color: #868e96;
 
   span {
@@ -133,10 +197,10 @@ export const PostActionContainer = styled.div`
 
 `;
 
-export const PostActionMeta = styled.span`
-  font-size: 14px;
+export const PostActionMeta = styled.div`
+  font-size: 16px;
   color: #868e96;
-  margin-left: 12px;
+  margin-bottom: 14px;
 `;
 
 // 좋아요 아이콘
