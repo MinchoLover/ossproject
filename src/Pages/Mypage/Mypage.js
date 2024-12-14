@@ -93,7 +93,8 @@ const handleCreate = async (newPost) => {
       <FeedContainer>
         <FeedHeader>
           <FeedHeaderTop>
-          <StyledImage src="/DetailImage/Group 3.png" alt="velog logo" width="500px" height="120px"/>
+          <BoxLink to="/feed">
+          <StyledImage src="/DetailImage/Group 3.png" alt="velog logo" width="500px" height="120px"/></BoxLink>
           <AuthorName><h2>{myName}님 안녕하세요!</h2></AuthorName>
             <Sort>
               <ButtonIcon>
