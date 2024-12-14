@@ -4,7 +4,6 @@ import { useRecoilState } from "recoil";
 import { myInfoname } from '../../Atom';
 import { useState, useEffect } from "react";
 import {
-    AuthorImage,
     AuthorLogo,
     AuthorName,
     BaseContainer,
@@ -98,8 +97,14 @@ function DetailPage() {
                 <Sort>
                     
                     
-                    <ButtonIcon>메인 페이지</ButtonIcon>
-                    <ButtonIcon>즐겨찾기</ButtonIcon>
+                <ButtonIcon>
+                <BoxLink to="/feed">메인 페이지</BoxLink>
+                
+              </ButtonIcon>
+              <ButtonIcon>
+                <BoxLink to="/mypage">즐겨찾기</BoxLink>
+                
+              </ButtonIcon>
                    
                 </Sort>
             </Header>
@@ -138,7 +143,7 @@ function DetailPage() {
                     </FeedContent>
                         
                     <FeedAuthorInfo>
-                        <AuthorImage src="/Image/wifi.png" alt="velog logo"  />
+                       
                        
                         <div>
                             <AuthorName>{myName}</AuthorName>
