@@ -34,13 +34,12 @@ const fetchAndSendData = async () => {
     const openAPIData = await fetchOpenAPIData();
 
     const transformedData = openAPIData.map((item) => ({
-        title: item.MAIN_TITLE,          // OpenAPI의 필드를 MockAPI 필드에 맞게 매핑
+        title: item.MAIN_TITLE,
         description: item.ITEMCNTNTS,
         date: item.USAGE_DAY_WEEK_AND_TIME || "날짜 정보 없음",
         location: item.GUGUN_NM || "위치 정보 없음",
     }));
 
-    // 데이터를 MockAPI로 전송
     for (const festival of transformedData) {
         await sendToMockAPI(festival);
     }

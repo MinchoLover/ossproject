@@ -7,11 +7,11 @@ export const Input = styled.input `
   border-width: 0;
   height: 30px;
   font-size: 17px;
-  
   &::placeholder {
     font-size: 17px;
     color: #ACB5BD;
   }
+  background-color: #f9fafb;
 `;
 export const EditInput = styled.input `
   width: 300px;
@@ -19,6 +19,7 @@ export const EditInput = styled.input `
   height: 30px;
   font-size: 17px;
   color: #ACB5BD;
+  background-color: #f9fafb;
   &:focus {
     color: #15B886;
   }
@@ -55,14 +56,19 @@ export const H1 = styled.h1 `
 /* ----------------------------------------최상위 요소---------------------------------------------- */
 export const Page = styled.div `
 width: 1800px;
-height: 1000px;
+/* height: 1000px; */
+height: 100vh;
+padding-top: 50px;
 display: flex;
 justify-content: ${props=> props.page === "edit" ? "" :"center"};
-align-items: center;
 flex-direction: ${props => props.page === "edit" ? "column" : "row"};
+background-color : #f9fafb;
 `;
 
-
+export const PostImage = styled.img`
+ display: flex;
+ margin-bottom: 50px;
+`;
 
 // 폼 페이지 요소
 export const BaseContainer = styled.div `

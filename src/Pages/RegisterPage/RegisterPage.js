@@ -18,9 +18,11 @@ import {
     Span,
     Bottom,
     Button,
-    H1
+    H1,
+    PostImage
 } from './Mycomponent.js';
 import { myInfoEmail, myInfoIntroduce, myInfoPassword, myInfoname } from "../../Atom.js";
+
 
 
 function RegisterPage() {
@@ -49,11 +51,14 @@ function RegisterPage() {
 
 
     return (
-        <Page>
+        <Page >
+           
+                
             <BaseContainer>
 
                 {/* 헤더요소 */}
-
+                
+                    <PostImage src="/DetailImage/Group 3.png" alt="velog logo" width="500px" height="140px" marginButtom="100px"/>
                 <Header>
                     <H1>환영합니다!</H1>
                     <p>기본 회원 정보를 등록해주세요</p>
@@ -63,6 +68,7 @@ function RegisterPage() {
 
                 <Body>
                     <Box>
+                        
                         <Label>이름</Label>
                         <Name>
                             <Input

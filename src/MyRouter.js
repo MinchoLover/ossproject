@@ -13,7 +13,6 @@ import Mypage from './Pages/Mypage/Mypage';
 function MyRouter() {
     
   return(
-      // 페이지 경로 한 번에 관리
       <Routes>
           {/* 로그인 페이지 */}
           <Route path="/" element={<RegisterPage />}/>

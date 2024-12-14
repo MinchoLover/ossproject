@@ -3,7 +3,7 @@ import styled from 'styled-components';
 // 기본 컨테이너 스타일
 export const BaseContainer = styled.div `
   width: 1800px; // 전체 너비
-  height: 1000px; // 전체 높이
+  height: 100%;
   display: flex; // flexbox 사용
   flex-direction: column; // 세로 방향 정렬
   align-items: center; // 중앙 정렬
@@ -125,10 +125,10 @@ export const FeedAuthorInfo = styled.div `
 `;
 
 // 작성자 이미지 스타일
-export const AuthorImage = styled.div `
+export const AuthorImage = styled.img `
   width: 132px; // 이미지 너비
   height: 132px; // 이미지 높이
-  background-color: #ccc; // 배경 색상
+  
   border-radius: 50%; // 둥근 모서리
   margin-right: 10px; // 오른쪽 여백
 `;

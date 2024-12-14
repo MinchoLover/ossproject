@@ -4,7 +4,7 @@ import { myInfoEmail, myInfoIntroduce, myInfoPassword, myInfoname } from '../../
 import { useNavigate } from "react-router-dom";
 
 import { BaseContainer, Body, Bottom, Box, BoxLink, Button, EditInput, Email, H1, Header, Introduce, Label, Name, Page, Password } from "../RegisterPage/Mycomponent";
-import { ButtonIcon, FeedHeaderTop, Sort, StyledImage} from '../FeedPage/Mycomponent';
+import { ButtonIcon, FeedHeaderTop, PostImage, Sort} from '../FeedPage/Mycomponent';
 
 
 
@@ -27,16 +27,20 @@ function EditPage () {
     }
   }
   return (
-    <Page page = "edit">
+    <Page page = "edit" 
+    style={({
+        display:"flex",
+        justifyContent:"center",
+        alignItems:"center"})}>
         <FeedHeaderTop style={({
             width: '1100px',
             height: '60px',
             marginBottom: "150px",
         })}>
-        <StyledImage src="/Image/velog logo.png" alt="velog logo"/>
+            <PostImage src="/DetailImage/Group 3.png" alt="velog logo"  style={({marginLeft:"150px"})}/>
+        
                 <Sort>
-                    <StyledImage src="/Image/bell.png" alt="bell" width="20px" height="20px"/>
-                    <StyledImage src="/Image/search.png" alt="search" width="20px" height="20px"/>
+                   
                     <ButtonIcon>
                         <BoxLink to="/feed">피드 페이지
                     </BoxLink>

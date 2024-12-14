@@ -2,28 +2,23 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BoxLink, ButtonIcon, FeedContainer, FeedHeader, FeedHeaderTop, PageContainer, PostGrid, Sort, StyledImage, StyledInput } from "../FeedPage/Mycomponent";
 import { PostCardActions, PostCardDetails, PostCardHeader, StyledArea, StyledPostCard } from "./Mycomponent";
-import styled from "styled-components";
+import { AuthorName } from "../DetailPage/Mycomponent";
+import { useRecoilState } from "recoil";
+import { useParams } from "react-router-dom";
+import { myInfoname } from "../../Atom";
 
-// Styled Button
-const Button = styled.button`
-  padding: 8px 12px;
-  background-color: ${(props) => (props.danger ? "#ff4d4f" : "#1890ff")};
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  width: 130px;
-  height: 30px;
-  cursor: pointer;
-  &:hover {
-    background-color: ${(props) => (props.danger ? "#ff7875" : "#40a9ff")};
-  }
-`;
+
 
 function MyPage() {
   const [favorites, setFavorites] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [editingPost, setEditingPost] = useState(null);
+
+  const [myName] = useRecoilState(myInfoname);
+    
+
+    const { id } = useParams();
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -39,7 +34,7 @@ function MyPage() {
     };
 
     fetchFavorites();
-  }, []);
+  }, [id]);
 
   const handleDelete = async (id) => {
     try {
@@ -98,12 +93,12 @@ const handleCreate = async (newPost) => {
       <FeedContainer>
         <FeedHeader>
           <FeedHeaderTop>
-            <StyledImage src="/DetailImage/bugilogo.png" alt="velog logo" width="500px" height="100px" />
+          <StyledImage src="/DetailImage/Group 3.png" alt="velog logo" width="500px" height="120px"/>
+          <AuthorName><h2>{myName}님 안녕하세요!</h2></AuthorName>
             <Sort>
-              <StyledImage src="/Image/bell.png" alt="bell" width="20px" height="20px" />
-              <StyledImage src="/Image/search.png" alt="search" width="20px" height="20px" />
               <ButtonIcon>
-                <BoxLink to="/feed">피드 페이지</BoxLink>
+                <BoxLink to="/feed">메인 페이지</BoxLink>
+                
               </ButtonIcon>
             </Sort>
           </FeedHeaderTop>
@@ -132,8 +127,8 @@ const handleCreate = async (newPost) => {
                     <p>부제목: {favorite.SUBTITLE || "정보 없음"}</p>
                   </PostCardDetails>
                   <PostCardActions>
-                    <Button onClick={() => handleEdit(favorite)}>수정</Button>
-                    <Button danger onClick={() => handleDelete(favorite.id)}>삭제</Button>
+                    <ButtonIcon style={({border:"none",color:"white",backgroundColor:"#1890ff"})}onClick={() => handleEdit(favorite)}>수정</ButtonIcon>
+                    <ButtonIcon style={({border:"none", color: "white", backgroundColor:"#ff7875"})}danger onClick={() => handleDelete(favorite.id)}>삭제</ButtonIcon>
                   </PostCardActions>
                 </StyledPostCard>
               ))}
@@ -215,7 +210,7 @@ function CreateForm({onCreate}) {
         placeholder="부제목"
       />
       <PostCardActions>
-        <Button onClick={handleSubmit}>추가</Button>
+        <ButtonIcon style={({border:"none",color:"white",backgroundColor:"#1890ff"})} onClick={handleSubmit}>추가</ButtonIcon>
       </PostCardActions>
     </StyledPostCard>
   );
@@ -300,8 +295,8 @@ function EditForm({ post, onSave, onCancel }) {
       />
       </p>
       <PostCardActions>
-        <Button onClick={() => onSave(updatedPost)}>저장</Button>
-        <Button danger onClick={onCancel}>취소</Button>
+        <ButtonIcon style={({border:"none",color:"white",backgroundColor:"#1890ff"})}  onClick={() => onSave(updatedPost)}>저장</ButtonIcon>
+        <ButtonIcon style={({border:"none",color:"white",backgroundColor:"#ff7875"})} danger onClick={onCancel}>취소</ButtonIcon>
       </PostCardActions>
     </StyledPostCard>
   );

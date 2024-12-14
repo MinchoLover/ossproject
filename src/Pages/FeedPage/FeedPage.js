@@ -24,9 +24,11 @@ import {
     StyledLabel,
     StyledRadius,
     StyledSelect,
-    StyledTrendingContainer
 } from './Mycomponent';
 import DetailPage from '../DetailPage/DetailPage';
+import { useRecoilState } from 'recoil';
+import { updatedLikeCount } from '../../Atom';
+
 
 function FeedPage() {
     const [posts, setPosts] = useState([]);
@@ -39,6 +41,8 @@ function FeedPage() {
     });
     const [filteredPosts, setFilteredPosts] = useState([]);
     const [sortOrder, setSortOrder] = useState("asc");
+
+    const [like] = useRecoilState(updatedLikeCount);
 
 
     useEffect(() => {
@@ -53,6 +57,7 @@ function FeedPage() {
                             numOfRows: 100,
                             pageNo: 1,
                             resultType: "json",
+                            
                         },
                     }
                 );
@@ -89,7 +94,7 @@ function FeedPage() {
     
         const dateMatch = dateString.match(/(\d{4})[년\s\-.]*(\d{1,2})?[월\s\-.]*(\d{1,2})?[일\s\-.]*/);
         if (dateMatch) {
-            const [, year, month = "01", day = "01"] = dateMatch; // 연도는 필수, 월/일이 없으면 기본값 1월 1일
+            const [, year, month = "01", day = "01"] = dateMatch; 
             return new Date(`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`);
         }
     
@@ -121,6 +126,7 @@ function FeedPage() {
     }, []);
 
     const handleLike = async (id) => {
+        
         try {
             const postToUpdate = posts.find((post) => post.UC_SEQ === id);
             if (!postToUpdate) return;
@@ -135,13 +141,14 @@ function FeedPage() {
                     ...postToUpdate,
                     liked: updatedLiked,
                     likeCount: updatedLikeCount,
-                });
+                    
+                });alert("즐겨찾기에 추가되었습니다!",{like});
             } else {
                 const response = await axios.get("https://674d47b354e1fca9290eeeb5.mockapi.io/festivals");
                 const favorite = response.data.find((fav) => fav.UC_SEQ === id);
                 if (favorite) {
                     await axios.delete(`https://674d47b354e1fca9290eeeb5.mockapi.io/festivals/${favorite.id}`);
-                }
+                }alert("즐겨찾기에서 삭제되었습니다!");
             }
     
             setPosts((prevPosts) =>
@@ -183,11 +190,10 @@ function FeedPage() {
             <FeedContainer>
                 <FeedHeader>
                     <FeedHeaderTop>
-                        <StyledImage src="/DetailImage/bugilogo.png" alt="velog logo" width="500px" height="100px" />
+                        
+                        <StyledImage src="/DetailImage/Group 3.png" alt="velog logo" width="500px" height="120px"/>
                         <Sort>
-                            <StyledImage src="/Image/bell.png" alt="bell" width="20px" height="20px" />
-                            <StyledImage src="/Image/search.png" alt="search" width="20px" height="20px" />
-                            <ButtonIcon>
+                            <ButtonIcon style={({width: "130px"})}>
                                 <BoxLink to="/edit">개인 정보 수정</BoxLink>
                             </ButtonIcon>
                             <ButtonIcon>
@@ -197,36 +203,44 @@ function FeedPage() {
                     </FeedHeaderTop>
                     <FeedHeaderBottom>
                         <Sort fontWeight="bold">
-                            <StyledTrendingContainer>
-                                <StyledImage src="/Image/trending.png" alt="trending" width="30px" height="30px" />
-                                <div className="trending-text">트렌딩</div>
-                            </StyledTrendingContainer>
+                            
                             <Sort>
                                 <ButtonIcon onClick={() => setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"))}>
                                     {sortOrder === "asc" ? "최신순" : "과거순"}
                                 </ButtonIcon>
                             </Sort>
                         </Sort>
-                        <div style={{ marginBottom: "20px" }}>
-                                <StyledLabel>지역:</StyledLabel>
+                        <div style={{ display: "flex", marginBottom: "20px"}}>
+                                <ButtonIcon style={({width: "250px", height:"45px" ,marginRight: "50px"})}><StyledLabel>지역: </StyledLabel>
                             <StyledSelect
                                 value={filter.gugun}
                                 onChange={(e) => setFilter({ ...filter, gugun: e.target.value })}
                             >
                                 <option value="">전체</option>
+                                <option value="강서구">강서구</option>
+                                <option value="중구">중구</option>
+                                <option value="남구">남구</option>
+                                <option value="동구">동구</option>
+                                <option value="서구">서구</option>
+                                <option value="수영구">수영구</option>
+
+                                <option value="연제구">연제구</option>
+                                <option value="영도구">영도구</option>
                                 <option value="해운대구">해운대구</option>
                                 <option value="중구">중구</option>
                                 <option value="사하구">사하구</option>
                                 <option value="부산진구">부산진구</option>
                             </StyledSelect>
+                            </ButtonIcon>
                             <div>
-                        <StyledLabel>축제 이름:</StyledLabel>
+                        <ButtonIcon style={({width: "350px", height:"45px"})}><StyledLabel> 축제 이름:</StyledLabel>
+                            
                         <StyledInput
                             type="text"
                             placeholder="축제 이름을 입력하세요"
                             value={filter.keyword}
                             onChange={(e) => setFilter({ ...filter, keyword: e.target.value })}
-                        />
+                        /></ButtonIcon>
                             </div>
                         </div>
                     </FeedHeaderBottom>
@@ -260,7 +274,7 @@ function PostCard({ post, likeCount, likeImage, onClick, id }) {
     return (
         <Grid>
             <BoxLink to={`/detail/${post.UC_SEQ}`} element={<DetailPage />}>
-                {post.MAIN_IMG_THUMB && (<PostImage src={post.MAIN_IMG_THUMB} />)}
+                {post.MAIN_IMG_THUMB && (<PostImage style={({width:"100%"})} src={post.MAIN_IMG_THUMB} />)}
                 <PostDetails>
                     <PostTitle>{removeParent(post.MAIN_TITLE)}</PostTitle>
                     <PostMeta>
@@ -280,7 +294,7 @@ function PostCard({ post, likeCount, likeImage, onClick, id }) {
                     {post.CNTCT_TEL || "알 수 없음"}
                 </PostAuthor>
                 <LikeIcon onClick={() => onClick(post.UC_SEQ)} style={{ marginLeft: "auto" }}>
-                    <StyledImage src={likeImage} alt="like icon" width="10px" height="10px" /> {likeCount}
+                    <StyledImage src={likeImage} alt="like icon" width="10px" height="10px" /> {likeCount} like
                 </LikeIcon>
             </PostActionContainer>
         </Grid>

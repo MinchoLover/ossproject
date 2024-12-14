@@ -12,8 +12,6 @@ root.render(
     <RecoilRoot>
         <BrowserRouter>
             <App/>
-            {/* <AxiosAPI/> */}
-            {/* <Api/> */}
         </BrowserRouter>
     </RecoilRoot>
 );

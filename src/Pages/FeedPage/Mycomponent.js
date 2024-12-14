@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-// 전체 페이지 컨테이너
 export const PageContainer = styled.div`
   background-color: #f9fafb; //그리드 간의 간격과 일치하는 배경색
-  
   padding: 30px;
-  min-height: 100vh;
+  height: 100%;
+  height: 100vh;
+  
 `;
 
 export const Grid = styled.div`
@@ -78,12 +78,12 @@ export const StyledSelect = styled.select`
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 14px;
-  background-color: white;
-  color: #333;
   &:focus {
     outline: none;
     border-color: #007aff;
   }
+  background-color: #fff;
+  
 `;
 
 // Styled Input
@@ -140,7 +140,7 @@ export const PostCard = styled.div`
 export const PostImage = styled.img`
  
   height: 180px;
-  width: 100%;
+  
 `;
 
 // 포스트 세부 정보
